@@ -6,11 +6,10 @@ import { ProfileRouter } from './routers/profile.router';
 import { SearchRouter } from './routers/search.router';
 import { FileRouter } from './routers/file.router';
 
-const user = process.env.DB_USER;
-const pwd = process.env.DB_PWD;
-const dbName = process.env.DB_NAME;
-const dbUri = process.env.DB_CONN || `mongodb://${user}:${pwd}@ds113358.mlab.com:13358/sog-profile-dev`;
-
+const dbUri = process.env.DB_CONN;
+if (!dbUri) {
+  throw 'Missing env var DB_CONN.'
+}
 let db: Db;
 
 const app: Application = express();
