@@ -8,11 +8,8 @@ import { FileRouter } from './routers/file.router';
 
 const user = process.env.DB_USER;
 const pwd = process.env.DB_PWD;
-const dbName = 'sog-profile-dev';
+const dbName = process.env.DB_NAME;
 const dbUri = process.env.DB_CONN || `mongodb://${user}:${pwd}@ds113358.mlab.com:13358/sog-profile-dev`;
-if (!user || !pwd || !dbUri) {
-  throw 'Database username, password, or connection URI not specified.'
-}
 
 let db: Db;
 
@@ -24,7 +21,7 @@ app.use(express.json());
 (async () => { 
   try {
     const client = await MongoClient.connect(dbUri);
-    db = client.db(dbName);
+    db = client.db();
   } catch (error) {
     console.log(error);
   }
