@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "8.11.0"
+  },
   "name": "server",
   "version": "1.0.0",
   "description": "server created by Rarry",
@@ -11,7 +14,7 @@
     "build": "tsc",
     "build-watch": "tsc -w",
     "heroku": "heroku",
-    "deploy-heroku-dev": "npm run heroku -- container:push web -a sogeti-profile-api-dev"
+    "postinstall": "npm run build"
   },
   "author": "",
   "license": "ISC",
