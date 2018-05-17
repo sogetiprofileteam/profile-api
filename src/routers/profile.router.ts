@@ -28,9 +28,10 @@ export class ProfileRouter {
       }
     });
     
-    router.put('/:id', (req: Request, res: Response) => {
-      console.log(req.params.id);
-      res.send('Profile Put here');
+    router.put('/:id', async (req: Request, res: Response) => {
+      const profile = req.body;
+      const result = await this.collection.updateOne(req.params.id, profile);
+      res.send(204);
     });
     
     router.delete('/:id', (req: Request, res: Response) => res.send('Profile delete here'));
