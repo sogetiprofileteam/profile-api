@@ -30,8 +30,12 @@ export class ProfileRouter {
     
     router.put('/:id', async (req: Request, res: Response) => {
       const profile = req.body;
-      const result = await this.collection.updateOne(req.params.id, profile);
-      res.send(204);
+      delete profile._id;
+      const result = await this.collection.updateOne(
+        { "_id": new ObjectId(req.params.id) },
+        { $set: profile }
+      );
+      res.sendStatus(204);
     });
     
     router.delete('/:id', (req: Request, res: Response) => res.send('Profile delete here'));
