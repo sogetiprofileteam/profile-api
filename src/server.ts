@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { Request, Response, Application } from 'express';
+import { Request, Response, Application, NextFunction } from 'express';
 import { MongoClient, Db, MongoError } from 'mongodb';
 import { corsMiddleware } from './utils';
 import { ProfileRouter } from './routers/profile.router';
@@ -12,9 +12,16 @@ if (!dbUri) {
 }
 let db: Db;
 
+process.on('uncaughtException', (err: Error) => {
+
+});
+
 const app: Application = express();
 app.use(corsMiddleware);
 app.use(express.json());
+app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
+  res.sendStatus(500);
+});
 
 // Initialize connection once
 (async () => { 
@@ -29,7 +36,7 @@ app.use(express.json());
   app.use('/profile', profileRouter.router);
   const searchRouter = new SearchRouter(db);
   app.use('/search', searchRouter.router);
-  const fileRouter = new FileRouter(db);
+  const fileRouter = new FileRouter(db, process.env.API_HOST);
   app.use('/file', fileRouter.router);
 
   // Start the application after the database connection is ready
