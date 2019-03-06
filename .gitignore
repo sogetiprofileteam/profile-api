@@ -62,3 +62,8 @@ typings/
 
 dist
 build.sh
+/sogeti-portfolio-api/obj/Debug/netcoreapp2.2
+/sogeti-portfolio-api/bin/Debug/netcoreapp2.2
+/sogeti-portfolio-api/.vs
+/sogeti-portfolio-api/sogeti-portfolio-api.csproj.user
+/sogeti-portfolio-api/sogeti-portfolio-api.sln
