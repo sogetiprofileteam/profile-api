@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "c:\\Users\\tyalexan\\source\\repos\\sogeti-portfolio-api\\Testing\\MSTest.Tests\\MSTest.Tests.csproj",
+  "TargetFramework": "netcoreapp2.2",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
+}
