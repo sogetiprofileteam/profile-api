@@ -18,4 +18,4 @@ After restore navigate to the solution folder and run `dotnet test` or `npm run 
 
 ## Running the Project "Out of the Gate"
 
-To run the project without going through restore process, navigate to the solution folder and run `npm run startproj".
+To run the project without going through restore process, navigate to the solution folder and run `npm run startproj`.
