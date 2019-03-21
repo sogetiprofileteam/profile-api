@@ -1,0 +1,11 @@
+{
+    "name": "sogeti-profile-application",
+    "version": "0.0.1",
+    "scripts": {
+      "start": "dotnet run -p sogeti-portfolio-api/sogeti-portfolio-api.csproj ",
+      "test": "dotnet test",
+      "restore": "dotnet restore",
+      "build": "npm run restore && dotnet build",
+      "startproj": "npm run restore && npm run start"
+    }
+}
