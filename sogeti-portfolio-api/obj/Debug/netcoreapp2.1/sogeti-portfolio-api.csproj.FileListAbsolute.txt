@@ -1,6 +1,0 @@
-C:\Users\tyalexan\source\repos\sogeti-portfolio-api\sogeti-portfolio-api\obj\Debug\netcoreapp2.1\sogeti-portfolio-api.csprojAssemblyReference.cache
-C:\Users\tyalexan\source\repos\sogeti-portfolio-api\sogeti-portfolio-api\obj\Debug\netcoreapp2.1\sogeti-portfolio-api.csproj.CoreCompileInputs.cache
-C:\Users\tyalexan\source\repos\sogeti-portfolio-api\sogeti-portfolio-api\obj\Debug\netcoreapp2.1\sogeti-portfolio-api.RazorAssemblyInfo.cache
-C:\Users\tyalexan\source\repos\sogeti-portfolio-api\sogeti-portfolio-api\obj\Debug\netcoreapp2.1\sogeti-portfolio-api.RazorAssemblyInfo.cs
-C:\Users\tyalexan\source\repos\sogeti-portfolio-api\sogeti-portfolio-api\obj\Debug\netcoreapp2.1\sogeti-portfolio-api.AssemblyInfoInputs.cache
-C:\Users\tyalexan\source\repos\sogeti-portfolio-api\sogeti-portfolio-api\obj\Debug\netcoreapp2.1\sogeti-portfolio-api.AssemblyInfo.cs
