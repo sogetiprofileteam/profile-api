@@ -49,7 +49,6 @@ namespace sogeti_portfolio_api
 
             app.UseSwagger();
             app.UseSwaggerUI(swag => swag.SwaggerEndpoint("/swagger/v1/swagger.json", "DEV - Sogeti Profile API"));
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
