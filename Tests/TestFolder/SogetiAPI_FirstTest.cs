@@ -7,16 +7,9 @@ namespace MSTest.Tests
     public class SogetiAPI_FirstTest
     {
         [TestMethod]
-        public void FirstTest_PassTest()
+        public void MsTestPass()
         {
             bool does_this_work = true;
-            Assert.IsTrue(does_this_work);
-        }
-
-        [TestMethod]
-        public void SecondTest_FailTest()
-        {
-            bool does_this_work = false;
             Assert.IsTrue(does_this_work);
         }
     }

@@ -7,13 +7,8 @@ namespace Tests
     {
 
         [Fact]
-        public void Pass() {
+        public void XUnitPass() {
             Assert.True(true);
         }   
-
-        [Fact]
-        public void Fail() {
-            Assert.False(true);
-        }
     }
 }
