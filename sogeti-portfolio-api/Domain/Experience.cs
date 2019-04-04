@@ -1,6 +1,6 @@
 using System;
 
-namespace sogeti_portfolio_api.Models {
+namespace sogeti_portfolio_api.Domain {
     public class Experience {
         public Guid Id { get; set; }
         public string CompanyName { get; set; }

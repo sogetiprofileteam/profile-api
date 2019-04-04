@@ -1,4 +1,4 @@
-namespace sogeti_portfolio_api.Models {
+namespace sogeti_portfolio_api.Domain {
     public class Address {
         public string LineOne { get; set; }
         public string LineTwo { get; set; }

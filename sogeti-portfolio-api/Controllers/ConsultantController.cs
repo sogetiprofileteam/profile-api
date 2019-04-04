@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using sogeti_portfolio_api.Models;
+using sogeti_portfolio_api.Domain;
 
 namespace sogeti_portfolio_api.Controllers {
     [Route ("consultant")]
