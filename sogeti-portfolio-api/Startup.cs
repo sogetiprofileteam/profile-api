@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using sogeti_portfolio_api.Extensions;
 
 namespace sogeti_portfolio_api
 {
@@ -39,6 +40,7 @@ namespace sogeti_portfolio_api
             {
                 swag.SwaggerDoc("v1", new Info { Title = "DEV - Sogeti Profile API", Version = "1.0" });
             });
+            services.AddElasticSearch(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
