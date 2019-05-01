@@ -1,0 +1,131 @@
+{
+    "lastName": "Hsiao",
+    "firstName": "Lin",
+    "secondName": "S",
+    "phone": "(555) 555-5555",
+    "title": "Consultant",
+    "practice": "Application & Cloud Technologies",
+    "fax": "(555) 555-5555",
+    "email": "lin.hsiao@us.sogeti.com",
+    "address": {
+        "lineOne": "10900 Stonelake Blvd",
+        "lineTwo": "Suite 195",
+        "city": "Austin",
+        "state": "TX",
+        "zipCode": 78759
+    },
+    "coreSkills": [
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": "Teamwork"
+        },
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": "Leadership"
+        },
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": "Communication"
+        }
+    ],
+    "technicalSkills": [
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": "Angular"
+        },
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": ".NET Core"
+        },
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": "Prolog"
+        }
+    ],
+    "education": [
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "school": "University of North Carolina at Asheville",
+            "levelOfDegree": "Bachelor of Science",
+            "subject": "Computer Science",
+            "startDate": "2012-08-01T00:00:00",
+            "endDate": "2016-05-01T00:00:00"
+        },
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "school": "University of Texas at Austin",
+            "levelOfDegree": "Master of Science",
+            "subject": "Computer Science",
+            "startDate": "2016-08-01T00:00:00",
+            "endDate": "2018-05-01T00:00:00"
+        }
+    ],
+    "certifications": [
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": "AWS Engineer 1",
+            "dateRecieved": "2017-03-01T00:00:00"
+        },
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": "AWS Engineer 1",
+            "dateRecieved": "2017-03-01T00:00:00"
+        }
+    ],
+    "experience": [
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "companyName": "Small Company",
+            "title": "Software Engineer - Entry Level",
+            "startDate": "2020-05-01T00:00:00",
+            "endDate": "2021-05-01T00:00:00",
+            "descriptions": [
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices felis id molestie fringilla. Integer pulvinar tempor sapien, id ultricies purus pretium sed. Suspendisse vel justo pulvinar, scelerisque felis non, bibendum ligula."
+                },
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Cras luctus dui sit amet dolor aliquam bibendum. Suspendisse facilisis est non sem tempus auctor."
+                },
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Curabitur ut imperdiet nisi. Suspendisse potenti. Donec id ligula consequat, tincidunt sem nec, commodo erat. Vestibulum commodo magna quis metus commodo viverra."
+                },
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Donec aliquet convallis urna, eget pharetra quam placerat ac. Donec et odio et tortor lobortis congue."
+                }
+            ]
+        },
+        {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "companyName": "Bigger Company",
+            "title": "Time Traveling Software Engineer",
+            "startDate": "2022-05-01T00:00:00",
+            "endDate": "2024-05-01T00:00:00",
+            "descriptions": [
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Curabitur elit ligula, porttitor eu accumsan maximus, suscipit vel ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed quam nulla, ullamcorper eu efficitur vitae, vulputate in ligula."
+                },
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Vivamus vel felis in risus suscipit aliquam sed eu sem. Aliquam porta odio turpis, eget egestas sem rutrum vel. Aliquam vehicula commodo posuere."
+                },
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Nulla eu dapibus tortor, nec vulputate augue. Vestibulum blandit enim pulvinar massa suscipit ullamcorper sed eget lectus. Morbi placerat risus vitae lorem egestas aliquet."
+                },
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Maecenas auctor ex eget pretium dictum. Morbi vel dolor erat. In quis vulputate metus."
+                },
+                {
+                    "id": "00000000-0000-0000-0000-000000000000",
+                    "summary": "Aenean placerat placerat est eget eleifend."
+                }
+            ]
+        }
+    ]
+}
