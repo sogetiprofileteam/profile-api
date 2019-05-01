@@ -46,6 +46,12 @@ namespace sogeti_portfolio_api.Controllers {
             return response;
         }
 
+        [HttpPut]
+        public async Task<IIndexResponse> Put ([FromBody] Consultant consultant) {
+            var response = await _elasticClient.IndexAsync (consultant, s => s.Index ("consultant").Id (consultant.Id));
+            return response;
+        }
+
         // DELETE consultant/5
         [HttpDelete ("{id}")]
         public async Task<IDeleteResponse> Delete (string id) {
