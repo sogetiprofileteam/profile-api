@@ -1,4 +1,4 @@
-# Sogeti Profile Application
+# Sogeti Profile Application Programming Interface
 
 This project was generated with .NET Core 2.2.
 

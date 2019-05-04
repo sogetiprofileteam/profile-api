@@ -8,6 +8,7 @@ using Nest;
 using Newtonsoft.Json;
 using sogeti_portfolio_api.Data;
 using sogeti_portfolio_api.Domain;
+using sogeti_portfolio_api.Interfaces;
 
 namespace sogeti_portfolio_api.Controllers {
     [Route ("consultant")]
@@ -15,15 +16,18 @@ namespace sogeti_portfolio_api.Controllers {
     public class ConsultantController : ControllerBase {
 
         private readonly IElasticClient _elasticClient;
+        private readonly IJsonSerialization _jsonSerialize;
 
-        public ConsultantController (IElasticClient elasticClient) {
+        public ConsultantController (IElasticClient elasticClient, IJsonSerialization jsonSerialize) {
             _elasticClient = elasticClient;
+            _jsonSerialize = jsonSerialize;
         }
+
 
         [HttpGet]
         public async Task<string> Get () {
             var response = await _elasticClient.SearchAsync<Consultant> (s => s.Index ("consultant"));
-            var json = JsonConvert.SerializeObject (response.Documents, Formatting.Indented);
+            var json = _jsonSerialize.Serialize(response.Documents);
             return json;
         }
 
@@ -35,7 +39,7 @@ namespace sogeti_portfolio_api.Controllers {
                     .Match (m => m
                         .Field (f => f.Id)
                         .Query (id))));
-            var json = JsonConvert.SerializeObject (response.Documents, Formatting.Indented);
+            var json = _jsonSerialize.Serialize(response.Documents);
             return json;
         }
 
