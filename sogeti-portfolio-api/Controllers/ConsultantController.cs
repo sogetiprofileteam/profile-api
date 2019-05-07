@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Nest;
 using Newtonsoft.Json;
 using sogeti_portfolio_api.Data;
-using sogeti_portfolio_api.Domain;
+using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Interfaces;
 
 namespace sogeti_portfolio_api.Controllers {
@@ -52,6 +52,7 @@ namespace sogeti_portfolio_api.Controllers {
 
         [HttpPut]
         public async Task<IIndexResponse> Put ([FromBody] Consultant consultant) {
+            Console.WriteLine(consultant);
             var response = await _elasticClient.IndexAsync (consultant, s => s.Index ("consultant").Id (consultant.Id));
             return response;
         }

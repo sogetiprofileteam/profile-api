@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Nest;
 using Newtonsoft.Json;
 using sogeti_portfolio_api.Data;
-using sogeti_portfolio_api.Domain;
+using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Interfaces;
 
 namespace sogeti_portfolio_api.Controllers {

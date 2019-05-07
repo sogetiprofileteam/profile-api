@@ -1,5 +1,5 @@
 using System;
-using sogeti_portfolio_api.Domain;
+using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Data
 {

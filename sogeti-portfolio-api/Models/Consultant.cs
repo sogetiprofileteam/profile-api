@@ -1,11 +1,12 @@
 using System;
 
-namespace sogeti_portfolio_api.Domain {
-    public class Consultant: Object {
+namespace sogeti_portfolio_api.Models {
+    public class Consultant {
         public Guid Id { get; set; }
-        public string LastName { get; set; }
+         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
+        public Status Status {get;set;}
         public string Phone { get; set; }
         public string Title { get; set; }
         public string Practice { get; set; }

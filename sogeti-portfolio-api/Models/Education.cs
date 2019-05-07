@@ -1,7 +1,7 @@
 using System;
 
-namespace sogeti_portfolio_api.Domain {
-    public class Education: Object {
+namespace sogeti_portfolio_api.Models {
+    public class Education {
         public Guid Id { get; set; }
         public string School { get; set; }
         public string LevelOfDegree { get; set; }
