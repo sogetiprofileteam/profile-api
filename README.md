@@ -2,6 +2,9 @@
 
 This project was generated with .NET Core 2.2.
 
+## Pre-Requisites
+.NET core 2.2, ElasticSearch
+  
 ## Setup for Development
 
 Navigate to solution folder `sogeti-profile-app` then run either `dotnet restore` or `npm run restore`. 
