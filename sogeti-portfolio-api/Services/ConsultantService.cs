@@ -19,7 +19,7 @@ namespace sogeti_portfolio_api.Services
         {
             // todo: goes to config
             var endpoint = "https://profile-db.documents.azure.com:443/";
-            var key = "RxMmKsMdnUkgK9tapHWUgPwiE4T49jSfcoOeihhSP7QgGIgecA9H6gbj3LoP4M9SpqUkvMQLH0dSVpJD8V1hhA==";
+            var key = "";
             cosmosDbClient = new DocumentClient(new Uri(endpoint), key);
         }
 
