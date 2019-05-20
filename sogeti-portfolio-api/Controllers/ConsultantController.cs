@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using sogeti_portfolio_api.Data;
 using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Interfaces;
+using sogeti_portfolio_api.Services;
+using System.Net;
 
 namespace sogeti_portfolio_api.Controllers {
     [Route ("consultant")]
@@ -17,37 +19,40 @@ namespace sogeti_portfolio_api.Controllers {
 
         private readonly IElasticClient _elasticClient;
         private readonly IJsonSerialization _jsonSerialize;
+        private readonly ConsultantService _service;
 
-        public ConsultantController (IElasticClient elasticClient, IJsonSerialization jsonSerialize) {
+        public ConsultantController (IElasticClient elasticClient, IJsonSerialization jsonSerialize, ConsultantService service) {
             _elasticClient = elasticClient;
             _jsonSerialize = jsonSerialize;
+            _service = service;
         }
 
-
         [HttpGet]
-        public async Task<string> Get () {
-            var response = await _elasticClient.SearchAsync<Consultant> (s => s.Index ("consultant"));
-            var json = _jsonSerialize.Serialize(response.Documents);
-            return json;
+        public async Task<IActionResult> Get()
+        {
+            var consultants = await _service.GetConsultantsAsync();
+            return Ok(consultants);
         }
 
         [HttpGet ("{id}")]
-        public async Task<string> Get (string id) {
-            var response = await _elasticClient.SearchAsync<Consultant> (s => s
-                .Index ("consultant")
-                .Query (q => q
-                    .Match (m => m
-                        .Field (f => f.Id)
-                        .Query (id))));
-            var json = _jsonSerialize.Serialize(response.Documents);
-            return json;
+        public async Task<IActionResult> Get(string id) 
+        {
+            var response = await _service.GetConsultantAsync(id);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+                return NotFound();
+
+            return Ok(response.Resource);
         }
 
         [HttpPost]
-        public async Task<IIndexResponse> Post ([FromBody] Consultant consultant) {
-            consultant.Id = Guid.NewGuid ();
-            var response = await _elasticClient.IndexAsync (consultant, s => s.Index ("consultant").Id (consultant.Id));
-            return response;
+        public async Task<IActionResult> Post(Consultant consultant) 
+        {
+            var response = await _service.PostConsultantAsync(consultant);
+            if (response.StatusCode == HttpStatusCode.Created)
+                return Ok();
+            else
+                return BadRequest();
         }
 
         [HttpPut]

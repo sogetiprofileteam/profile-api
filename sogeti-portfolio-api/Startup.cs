@@ -15,6 +15,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using sogeti_portfolio_api.Extensions;
 using sogeti_portfolio_api.Interfaces;
 using sogeti_portfolio_api.Models;
+using sogeti_portfolio_api.Services;
 
 namespace sogeti_portfolio_api
 {
@@ -42,6 +43,7 @@ namespace sogeti_portfolio_api
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
+            services.AddTransient<ConsultantService>();
 
             services.AddSwaggerGen(swag =>
             {
