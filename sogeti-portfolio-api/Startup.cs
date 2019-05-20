@@ -15,6 +15,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using sogeti_portfolio_api.Extensions;
 using sogeti_portfolio_api.Interfaces;
 using sogeti_portfolio_api.Models;
+using System.Text;
+using System.Net.Http.Headers;
 
 namespace sogeti_portfolio_api
 {
@@ -47,6 +49,14 @@ namespace sogeti_portfolio_api
             {
                 swag.SwaggerDoc("v1", new Info { Title = "DEV - Sogeti Profile API", Version = "1.0" });
             });
+
+            var elasticAuth = ASCIIEncoding.ASCII.GetBytes("elastic:y5rEZndC4Cf0C5AJKezKEnc6");
+            services.AddHttpClient("Elastic", c =>
+            {
+                c.BaseAddress = new Uri("https://891cab4305624435943512833ef533b2.us-east-1.aws.found.io:9243");
+                c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(elasticAuth));
+            });
+            
             services.AddElasticSearch(Configuration);
         }
 

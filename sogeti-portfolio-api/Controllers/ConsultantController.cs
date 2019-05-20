@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using sogeti_portfolio_api.Data;
 using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Interfaces;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace sogeti_portfolio_api.Controllers {
     [Route ("consultant")]
@@ -17,30 +19,31 @@ namespace sogeti_portfolio_api.Controllers {
 
         private readonly IElasticClient _elasticClient;
         private readonly IJsonSerialization _jsonSerialize;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public ConsultantController (IElasticClient elasticClient, IJsonSerialization jsonSerialize) {
+        public ConsultantController (IElasticClient elasticClient, IJsonSerialization jsonSerialize, IHttpClientFactory httpClientFactory) {
             _elasticClient = elasticClient;
             _jsonSerialize = jsonSerialize;
+            _httpClientFactory = httpClientFactory;
         }
 
-
         [HttpGet]
-        public async Task<string> Get () {
-            var response = await _elasticClient.SearchAsync<Consultant> (s => s.Index ("consultant"));
-            var json = _jsonSerialize.Serialize(response.Documents);
-            return json;
+        public async Task<IEnumerable<JToken>> Get()
+        {
+            var client = _httpClientFactory.CreateClient("Elastic");
+            var response = await client.GetStringAsync($"{client.BaseAddress}/consultant/_search?q=*");
+            var jsonResponse = JObject.Parse(response);
+            return jsonResponse["hits"]["hits"]
+                .Select(x => x["_source"]);
         }
 
         [HttpGet ("{id}")]
-        public async Task<string> Get (string id) {
-            var response = await _elasticClient.SearchAsync<Consultant> (s => s
-                .Index ("consultant")
-                .Query (q => q
-                    .Match (m => m
-                        .Field (f => f.Id)
-                        .Query (id))));
-            var json = _jsonSerialize.Serialize(response.Documents);
-            return json;
+        public async Task<JToken> Get(string id)
+        {
+            var client = _httpClientFactory.CreateClient("Elastic");
+            var response = await client.GetStringAsync($"{client.BaseAddress}/consultant/consultant/{id}");
+            var jsonResponse = JObject.Parse(response);
+            return jsonResponse["_source"];
         }
 
         [HttpPost]
