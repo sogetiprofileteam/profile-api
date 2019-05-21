@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using sogeti_portfolio_api.Extensions;
 using sogeti_portfolio_api.Interfaces;
 using sogeti_portfolio_api.Models;
 using System.Text;
@@ -38,7 +37,9 @@ namespace sogeti_portfolio_api
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
-            services.AddTransient<IConsultantService, ConsultantService>();
+            services.AddTransient<IElasticService<Consultant>, ConsultantService>();
+            services.AddTransient<IElasticService<CoreSkill>, CoreSkillService>();
+            services.AddTransient<IElasticService<TechnicalSkill>, TechnicalSkillService>();
 
             services.AddSwaggerGen(swag =>
             {
@@ -51,8 +52,6 @@ namespace sogeti_portfolio_api
                 c.BaseAddress = new Uri(Configuration["elasticsearch:url"]);
                 c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(elasticAuth));
             });
-
-            services.AddElasticSearch(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

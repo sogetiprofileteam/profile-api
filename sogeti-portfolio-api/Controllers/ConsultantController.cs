@@ -10,14 +10,13 @@ namespace sogeti_portfolio_api.Controllers
     [ApiController]
     public class ConsultantController : ControllerBase 
     {
-        private readonly IConsultantService _consultantService;
-
-        public ConsultantController (IConsultantService consultantService) => _consultantService = consultantService;
+        private readonly IElasticService<Consultant> _consultantService;
+        public ConsultantController (IElasticService<Consultant> consultantService) => _consultantService = consultantService;
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var profiles = await _consultantService.GetConsultantsAsync();
+            var profiles = await _consultantService.GetAsync();
 
             if (profiles.Any())
                 return Ok(profiles);
@@ -28,7 +27,7 @@ namespace sogeti_portfolio_api.Controllers
         [HttpGet ("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var profile = await _consultantService.GetConsultantAsync(id);
+            var profile = await _consultantService.GetAsync(id);
 
             if (profile != null)
                 return Ok(profile);
@@ -39,21 +38,21 @@ namespace sogeti_portfolio_api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Consultant consultant)
         {
-            await _consultantService.CreateConsultantAsync(consultant);
+            await _consultantService.CreateAsync(consultant);
             return CreatedAtAction(nameof(Get), consultant);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put(Consultant consultant)
         {
-            await _consultantService.UpdateConsultantAsync(consultant);
+            await _consultantService.UpdateAsync(consultant);
             return Ok();
         }
 
         [HttpDelete ("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await _consultantService.DeleteConsultantAsync(id);
+            await _consultantService.DeleteAsync(id);
             return Ok();
         }
 
