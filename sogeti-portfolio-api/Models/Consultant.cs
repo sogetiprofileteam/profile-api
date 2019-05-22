@@ -7,6 +7,7 @@ namespace sogeti_portfolio_api.Models {
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public Status Status {get;set;}
+        public Description Summary { get; set; }
         public string Phone { get; set; }
         public string Title { get; set; }
         public string Practice { get; set; }
