@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
-using Nest;
 using Newtonsoft.Json;
 using sogeti_portfolio_api.Data;
 using sogeti_portfolio_api.Models;
@@ -15,51 +14,50 @@ namespace sogeti_portfolio_api.Controllers {
     [ApiController]
     public class TechnicalSkillsController : ControllerBase {
 
-        private readonly IElasticClient _elasticClient;
-        private readonly IJsonSerialization _jsonSerialize;
-
-        public TechnicalSkillsController (IElasticClient elasticClient, IJsonSerialization jsonSerialize) {
-            _elasticClient = elasticClient;
-            _jsonSerialize = jsonSerialize;
-        }
+        private readonly IElasticService<TechnicalSkill> _technicalSkillService;
+        public TechnicalSkillsController (IElasticService<TechnicalSkill> technicalSkillService) => _technicalSkillService = technicalSkillService;
 
         [HttpGet]
-        public async Task<string> Get () {
-            var response = await _elasticClient.SearchAsync<TechnicalSkill> (s => s.Index ("technicalskills"));
-            var json = _jsonSerialize.Serialize(response.Documents);
-            return json;
+        public async Task<IActionResult> Get() 
+        {
+            var technicalSkills = await _technicalSkillService.GetAsync();
+
+            if (technicalSkills.Any())
+                return Ok(technicalSkills);
+
+            return NotFound();
         }
 
         [HttpGet ("{id}")]
-        public async Task<string> Get (string id) {
-            var response = await _elasticClient.SearchAsync<TechnicalSkill> (s => s
-                .Index ("technicalskills")
-                .Query (q => q
-                    .Match (m => m
-                        .Field (f => f.Id)
-                        .Query (id))));
-            var json = _jsonSerialize.Serialize(response.Documents);
-            return json;
+        public async Task<IActionResult> Get(string id) 
+        {
+            var technicalSkill = await _technicalSkillService.GetAsync(id);
+
+            if (technicalSkill != null)
+                return Ok(technicalSkill);
+
+            return NotFound();
         }
 
         [HttpPost]
-        public async Task<IIndexResponse> Post ([FromBody] TechnicalSkill skill) {
-            skill.Id = Guid.NewGuid ();
-            var response = await _elasticClient.IndexAsync (skill, s => s.Index ("technicalskills").Id (skill.Id));
-            return response;
+        public async Task<IActionResult> Post(TechnicalSkill skill)
+        {
+            await _technicalSkillService.CreateAsync(skill);
+            return CreatedAtAction(nameof(Get), skill);
         }
 
         [HttpPut]
-        public async Task<IIndexResponse> Put ([FromBody] TechnicalSkill skill) {
-            var response = await _elasticClient.IndexAsync (skill, s => s.Index ("technicalskills").Id (skill.Id));
-            return response;
+        public async Task<IActionResult> Put(TechnicalSkill skill)
+        {
+            await _technicalSkillService.UpdateAsync(skill);
+            return Ok();
         }
 
-        // DELETE consultant/5
         [HttpDelete ("{id}")]
-        public async Task<IDeleteResponse> Delete (string id) {
-            var response = await _elasticClient.DeleteAsync<TechnicalSkill> (id, d => d.Index ("technicalskills"));
-            return response;
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _technicalSkillService.DeleteAsync(id);
+            return Ok();
         }
 
     }

@@ -1,67 +1,59 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
-using Nest;
-using Newtonsoft.Json;
-using sogeti_portfolio_api.Data;
 using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Interfaces;
 
-namespace sogeti_portfolio_api.Controllers {
+namespace sogeti_portfolio_api.Controllers
+{
     [Route ("consultant")]
     [ApiController]
-    public class ConsultantController : ControllerBase {
-
-        private readonly IElasticClient _elasticClient;
-        private readonly IJsonSerialization _jsonSerialize;
-
-        public ConsultantController (IElasticClient elasticClient, IJsonSerialization jsonSerialize) {
-            _elasticClient = elasticClient;
-            _jsonSerialize = jsonSerialize;
-        }
-
+    public class ConsultantController : ControllerBase 
+    {
+        private readonly IElasticService<Consultant> _consultantService;
+        public ConsultantController (IElasticService<Consultant> consultantService) => _consultantService = consultantService;
 
         [HttpGet]
-        public async Task<string> Get () {
-            var response = await _elasticClient.SearchAsync<Consultant> (s => s.Index ("consultant"));
-            var json = _jsonSerialize.Serialize(response.Documents);
-            return json;
+        public async Task<IActionResult> Get()
+        {
+            var profiles = await _consultantService.GetAsync();
+
+            if (profiles.Any())
+                return Ok(profiles);
+
+            return NotFound();
         }
 
         [HttpGet ("{id}")]
-        public async Task<string> Get (string id) {
-            var response = await _elasticClient.SearchAsync<Consultant> (s => s
-                .Index ("consultant")
-                .Query (q => q
-                    .Match (m => m
-                        .Field (f => f.Id)
-                        .Query (id))));
-            var json = _jsonSerialize.Serialize(response.Documents);
-            return json;
+        public async Task<IActionResult> Get(string id)
+        {
+            var profile = await _consultantService.GetAsync(id);
+
+            if (profile != null)
+                return Ok(profile);
+
+            return NotFound();
         }
 
         [HttpPost]
-        public async Task<IIndexResponse> Post ([FromBody] Consultant consultant) {
-            consultant.Id = Guid.NewGuid ();
-            var response = await _elasticClient.IndexAsync (consultant, s => s.Index ("consultant").Id (consultant.Id));
-            return response;
+        public async Task<IActionResult> Post(Consultant consultant)
+        {
+            await _consultantService.CreateAsync(consultant);
+            return CreatedAtAction(nameof(Get), consultant);
         }
 
         [HttpPut]
-        public async Task<IIndexResponse> Put ([FromBody] Consultant consultant) {
-            Console.WriteLine(consultant);
-            var response = await _elasticClient.IndexAsync (consultant, s => s.Index ("consultant").Id (consultant.Id));
-            return response;
+        public async Task<IActionResult> Put(Consultant consultant)
+        {
+            await _consultantService.UpdateAsync(consultant);
+            return Ok();
         }
 
-        // DELETE consultant/5
         [HttpDelete ("{id}")]
-        public async Task<IDeleteResponse> Delete (string id) {
-            var response = await _elasticClient.DeleteAsync<Consultant> (id, d => d.Index ("consultant"));
-            return response;
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _consultantService.DeleteAsync(id);
+            return Ok();
         }
 
     }

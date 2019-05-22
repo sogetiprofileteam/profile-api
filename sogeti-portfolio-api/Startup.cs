@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-using sogeti_portfolio_api.Extensions;
 using sogeti_portfolio_api.Interfaces;
 using sogeti_portfolio_api.Models;
+using System.Text;
+using System.Net.Http.Headers;
+using sogeti_portfolio_api.Services;
 
 namespace sogeti_portfolio_api
 {
@@ -42,12 +37,21 @@ namespace sogeti_portfolio_api
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
+            services.AddTransient<IElasticService<Consultant>, ConsultantService>();
+            services.AddTransient<IElasticService<CoreSkill>, CoreSkillService>();
+            services.AddTransient<IElasticService<TechnicalSkill>, TechnicalSkillService>();
 
             services.AddSwaggerGen(swag =>
             {
                 swag.SwaggerDoc("v1", new Info { Title = "DEV - Sogeti Profile API", Version = "1.0" });
             });
-            services.AddElasticSearch(Configuration);
+
+            var elasticAuth = ASCIIEncoding.ASCII.GetBytes(Configuration["elasticsearch:auth"]);
+            services.AddHttpClient("Elastic", c =>
+            {
+                c.BaseAddress = new Uri(Configuration["elasticsearch:url"]);
+                c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(elasticAuth));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

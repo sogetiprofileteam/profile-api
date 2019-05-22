@@ -2,7 +2,7 @@ using System;
 
 namespace sogeti_portfolio_api.Models {
     public class Consultant {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
          public string LastName { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
