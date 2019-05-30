@@ -6,9 +6,9 @@ namespace sogeti_portfolio_api.Interfaces
 {
     public interface IElasticService<T>
     {
-        Task<IEnumerable<JToken>> GetAsync();
+        Task<IEnumerable<string>> GetAsync();
 
-        Task<JToken> GetAsync(string id);
+        Task<string> GetAsync(string id);
 
         Task CreateAsync(T model);
 
