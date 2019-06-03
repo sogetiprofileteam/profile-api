@@ -2,11 +2,11 @@ using System;
 
 namespace sogeti_portfolio_api.Models {
     public class Education {
-        public Guid Id { get; set; }
-        public string School { get; set; }
-        public string LevelOfDegree { get; set; }
-        public string Subject { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public Guid id { get; set; }
+        public string school { get; set; }
+        public string levelOfDegree { get; set; }
+        public string subject { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
     }
 }
