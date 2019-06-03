@@ -2,10 +2,10 @@ using System;
 
 namespace sogeti_portfolio_api.Models {
     public class Experience {
-        public string CompanyName { get; set; }
-        public string Title { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public Description[] Descriptions { get; set; }
+        public string companyName { get; set; }
+        public string title { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
+        public Description[] descriptions { get; set; }
     }
 }

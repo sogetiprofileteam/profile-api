@@ -2,21 +2,21 @@ using System;
 
 namespace sogeti_portfolio_api.Models {
     public class Consultant {
-        public Guid? Id { get; set; }
-         public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public string SecondName { get; set; }
-        public Status Status {get;set;}
-        public string Phone { get; set; }
-        public string Title { get; set; }
-        public string Practice { get; set; }
-        public string Fax { get; set; }
-        public string Email { get; set; }
-        public Address Address { get; set; }
-        public CoreSkill[] CoreSkills { get; set; }
-        public TechnicalSkill[] TechnicalSkills { get; set; }
-        public Education[] Education { get; set; }
-        public Certification[] Certifications { get; set; }
-        public Experience[] Experience { get; set; }
+        public Guid? id { get; set; }
+         public string lastName { get; set; }
+        public string firstName { get; set; }
+        public string secondName { get; set; }
+        public Status status {get;set;}
+        public string phone { get; set; }
+        public string title { get; set; }
+        public string practice { get; set; }
+        public string fax { get; set; }
+        public string email { get; set; }
+        public Address address { get; set; }
+        public CoreSkill[] coreSkills { get; set; }
+        public TechnicalSkill[] technicalSkills { get; set; }
+        public Education[] education { get; set; }
+        public Certification[] certifications { get; set; }
+        public Experience[] experience { get; set; }
     }
 }

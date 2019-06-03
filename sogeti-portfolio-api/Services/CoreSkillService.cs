@@ -12,19 +12,14 @@ namespace sogeti_portfolio_api.Services
     public class CoreSkillService : IElasticService<CoreSkill>
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IJsonSerialization _serializer;
 
-        public CoreSkillService(IHttpClientFactory httpClientFactory, IJsonSerialization serializer)
-        {
-            _httpClientFactory = httpClientFactory;
-            _serializer = serializer;
-        }
+        public CoreSkillService(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
         public async Task CreateAsync(CoreSkill skill)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            skill.Id = Guid.NewGuid();
-            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/coreskill/_doc/{skill.Id}", skill);
+            skill.id = Guid.NewGuid();
+            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/coreskill/_doc/{skill.id}", skill);
             response.EnsureSuccessStatusCode();
         }
 
@@ -35,24 +30,24 @@ namespace sogeti_portfolio_api.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task<IEnumerable<string>> GetAsync()
+        public async Task<IEnumerable<JToken>> GetAsync()
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
             var response = await client.GetStringAsync($"{client.BaseAddress}/coreskill/_search?q=*");
             var jsonResponse = JObject.Parse(response);
 
             return jsonResponse["hits"]["hits"]
-                .Select(x => _serializer.SerializeWithCamelCaseProperties(x["_source"]));
+                .Select(x => x["_source"]);
         }
 
-        public async Task<string> GetAsync(string id)
+        public async Task<JToken> GetAsync(string id)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
             var response = await client.GetStringAsync($"{client.BaseAddress}/coreskill/_doc/{id}");
             var jsonResponse = JObject.Parse(response);
             
             if (jsonResponse["found"].Value<bool>())
-                return _serializer.SerializeWithCamelCaseProperties(jsonResponse["_source"]);
+                return jsonResponse["_source"];
 
             return null;
         }
@@ -60,7 +55,7 @@ namespace sogeti_portfolio_api.Services
         public async Task UpdateAsync(CoreSkill skill)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/coreskill/_doc/{skill.Id}", skill);
+            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/coreskill/_doc/{skill.id}", skill);
             response.EnsureSuccessStatusCode();
         }
     }
