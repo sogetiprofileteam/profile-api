@@ -51,14 +51,14 @@ namespace sogeti_portfolio_api.Data
             consultant.education = new Education[2];
             consultant.education[0] = new Education();
             consultant.education[0].levelOfDegree = "Bachelor of Science";
-            consultant.education[0].school = "University of North Carolina at Asheville";
+            consultant.education[0].school.name = "University of North Carolina at Asheville";
             consultant.education[0].subject = "Computer Science";
             consultant.education[0].startDate = new DateTime(2012, 08, 01);
             consultant.education[0].endDate = new DateTime(2016, 05, 01);
 
             consultant.education[1] = new Education();
             consultant.education[1].levelOfDegree = "Master of Science";
-            consultant.education[1].school = "University of Texas at Austin";
+            consultant.education[1].school.name = "University of Texas at Austin";
             consultant.education[1].subject = "Computer Science";
             consultant.education[1].startDate = new DateTime(2016, 08, 01);
             consultant.education[1].endDate = new DateTime(2018, 05, 01);
