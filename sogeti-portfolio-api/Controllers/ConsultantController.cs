@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Interfaces;
+using System;
 
 namespace sogeti_portfolio_api.Controllers
 {
@@ -45,6 +46,7 @@ namespace sogeti_portfolio_api.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(Consultant consultant)
         {
+            consultant.id = consultant.id ?? Guid.NewGuid();
             await _consultantService.UpdateAsync(consultant);
             return Ok();
         }
