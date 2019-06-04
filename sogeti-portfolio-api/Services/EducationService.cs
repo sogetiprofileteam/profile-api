@@ -18,8 +18,8 @@ namespace sogeti_portfolio_api.Services
         public async Task CreateAsync(Education school)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            school.Id = Guid.NewGuid();
-            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/education/_doc/{school.Id}", school);
+            school.id = Guid.NewGuid();
+            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/education/_doc/{school.id}", school);
             response.EnsureSuccessStatusCode();
         }
 
@@ -55,7 +55,7 @@ namespace sogeti_portfolio_api.Services
         public async Task UpdateAsync(Education school)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/education/_doc/{school.Id}", school);
+            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/education/_doc/{school.id}", school);
             response.EnsureSuccessStatusCode();
         }
     }
