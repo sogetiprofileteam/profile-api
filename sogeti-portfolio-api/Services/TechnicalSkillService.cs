@@ -14,12 +14,12 @@ namespace sogeti_portfolio_api.Services
         private readonly IHttpClientFactory _httpClientFactory;
 
         public TechnicalSkillService(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
-        
+
         public async Task CreateAsync(TechnicalSkill skill)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            skill.Id = Guid.NewGuid();
-            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/technicalskill/_doc/{skill.Id}", skill);
+            skill.id = Guid.NewGuid();
+            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/technicalskill/_doc/{skill.id}", skill);
             response.EnsureSuccessStatusCode();
         }
 
@@ -55,7 +55,7 @@ namespace sogeti_portfolio_api.Services
         public async Task UpdateAsync(TechnicalSkill skill)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/technicalskill/_doc/{skill.Id}", skill);
+            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/technicalskill/_doc/{skill.id}", skill);
             response.EnsureSuccessStatusCode();
         }
     }

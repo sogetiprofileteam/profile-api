@@ -15,12 +15,12 @@ namespace sogeti_portfolio_api.Services
         private readonly IHttpClientFactory _httpClientFactory;
 
         public ConsultantService(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
-
+        
         public async Task CreateAsync(Consultant consultant)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            consultant.Id = Guid.NewGuid();
-            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/consultant/_doc/{consultant.Id}", consultant);
+            consultant.id = Guid.NewGuid();
+            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/consultant/_doc/{consultant.id}", consultant);
             response.EnsureSuccessStatusCode();
         }
 
@@ -31,7 +31,9 @@ namespace sogeti_portfolio_api.Services
             var jsonResponse = JObject.Parse(response);
             
             if (jsonResponse["found"].Value<bool>())
+            {
                 return jsonResponse["_source"];
+            }
 
             return null;
         }
@@ -56,7 +58,7 @@ namespace sogeti_portfolio_api.Services
         public async Task UpdateAsync(Consultant consultant)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/consultant/_doc/{consultant.Id}", consultant);
+            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/consultant/_doc/{consultant.id}", consultant);
             response.EnsureSuccessStatusCode();
         }
     }

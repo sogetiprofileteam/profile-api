@@ -18,8 +18,8 @@ namespace sogeti_portfolio_api.Services
         public async Task CreateAsync(CoreSkill skill)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            skill.Id = Guid.NewGuid();
-            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/coreskill/_doc/{skill.Id}", skill);
+            skill.id = Guid.NewGuid();
+            var response = await client.PostAsJsonAsync($"{client.BaseAddress}/coreskill/_doc/{skill.id}", skill);
             response.EnsureSuccessStatusCode();
         }
 
@@ -55,7 +55,7 @@ namespace sogeti_portfolio_api.Services
         public async Task UpdateAsync(CoreSkill skill)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/coreskill/_doc/{skill.Id}", skill);
+            var response = await client.PutAsJsonAsync($"{client.BaseAddress}/coreskill/_doc/{skill.id}", skill);
             response.EnsureSuccessStatusCode();
         }
     }
