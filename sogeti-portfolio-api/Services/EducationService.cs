@@ -9,13 +9,13 @@ using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Services
 {
-    public class EducationService : IElasticService<Education>
+    public class EducationService : IElasticService<School>
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
         public EducationService(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
-        public async Task CreateAsync(Education school)
+        public async Task CreateAsync(School school)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
             school.id = Guid.NewGuid();
@@ -52,7 +52,7 @@ namespace sogeti_portfolio_api.Services
             return null;
         }
 
-        public async Task UpdateAsync(Education school)
+        public async Task UpdateAsync(School school)
         {
             var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
             var response = await client.PutAsJsonAsync($"{client.BaseAddress}/education/_doc/{school.id}", school);

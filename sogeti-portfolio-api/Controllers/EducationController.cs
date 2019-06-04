@@ -10,8 +10,8 @@ namespace sogeti_portfolio_api.Controllers
     [ApiController]
     public class EducationController : ControllerBase {
 
-        private readonly IElasticService<Education> _educationService;
-        public EducationController (IElasticService<Education> educationService) => _educationService = educationService;
+        private readonly IElasticService<School> _educationService;
+        public EducationController (IElasticService<School> educationService) => _educationService = educationService;
 
         [HttpGet]
         public async Task<IActionResult> Get() 
@@ -36,14 +36,14 @@ namespace sogeti_portfolio_api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Education school)
+        public async Task<IActionResult> Post(School school)
         {
             await _educationService.CreateAsync(school);
             return CreatedAtAction(nameof(Get), school);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Education school)
+        public async Task<IActionResult> Put(School school)
         {
             await _educationService.UpdateAsync(school);
             return Ok();
