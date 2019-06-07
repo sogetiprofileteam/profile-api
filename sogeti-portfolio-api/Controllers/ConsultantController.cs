@@ -9,54 +9,11 @@ namespace sogeti_portfolio_api.Controllers
 {
     [Route ("consultant")]
     [ApiController]
-    public class ConsultantController : ControllerBase 
+    public class ConsultantController : AbstractController<Consultant>
     {
-        private readonly IElasticService<Consultant> _consultantService;
-        public ConsultantController (IElasticService<Consultant> consultantService) => _consultantService = consultantService;
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        public ConsultantController (IElasticService<Consultant> consultantService) : base (consultantService)
         {
-            var profiles = await _consultantService.GetAsync();
-
-            if (profiles.Any())
-                return Ok(profiles);
-
-            return NotFound();
+            // intentionally empty
         }
-
-        [HttpGet ("{id}")]
-        public async Task<IActionResult> Get(string id)
-        {
-            var profile = await _consultantService.GetAsync(id);
-
-            if (profile != null)
-                return Ok(profile);
-
-            return NotFound();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(Consultant consultant)
-        {
-            await _consultantService.CreateAsync(consultant);
-            return CreatedAtAction(nameof(Get), consultant);
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Put(Consultant consultant)
-        {
-            consultant.id = consultant.id ?? Guid.NewGuid();
-            await _consultantService.UpdateAsync(consultant);
-            return Ok();
-        }
-
-        [HttpDelete ("{id}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            await _consultantService.DeleteAsync(id);
-            return Ok();
-        }
-
     }
 }
