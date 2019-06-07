@@ -2,9 +2,8 @@ using System;
 
 namespace sogeti_portfolio_api.Models
 {
-    public class School
+    public class School : AbstractModel
     {
-        public Guid? id { get; set; }
         public string name { get; set; }
     }
 }

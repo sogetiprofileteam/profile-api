@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using sogeti_portfolio_api.Interfaces;
+using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Controllers
 {
-   public class AbstractController<T> : ControllerBase
+   public class AbstractController<T> : ControllerBase where T : AbstractModel
    {
       private readonly IElasticService<T> _service;
 
