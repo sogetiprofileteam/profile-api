@@ -8,53 +8,11 @@ namespace sogeti_portfolio_api.Controllers
 {
     [Route ("coreskills")]
     [ApiController]
-    public class CoreSkillsController : ControllerBase {
+    public class CoreSkillsController : AbstractController<CoreSkill> {
 
-        private readonly IElasticService<CoreSkill> _coreSkillService;
-        public CoreSkillsController (IElasticService<CoreSkill> coreSkillService) => _coreSkillService = coreSkillService;
-
-        [HttpGet]
-        public async Task<IActionResult> Get() 
+        public CoreSkillsController(IElasticService<CoreSkill> coreSkillService) : base(coreSkillService)
         {
-            var coreSkills = await _coreSkillService.GetAsync();
-
-            if (coreSkills.Any())
-                return Ok(coreSkills);
-
-            return NotFound();
+            // intentionally empty
         }
-
-        [HttpGet ("{id}")]
-        public async Task<IActionResult> Get(string id) 
-        {
-            var coreSkill = await _coreSkillService.GetAsync(id);
-
-            if (coreSkill != null)
-                return Ok(coreSkill);
-
-            return NotFound();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(CoreSkill skill)
-        {
-            await _coreSkillService.CreateAsync(skill);
-            return CreatedAtAction(nameof(Get), skill);
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Put(CoreSkill skill)
-        {
-            await _coreSkillService.UpdateAsync(skill);
-            return Ok();
-        }
-
-        [HttpDelete ("{id}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            await _coreSkillService.DeleteAsync(id);
-            return Ok();
-        }
-
     }
 }

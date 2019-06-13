@@ -1,9 +1,8 @@
 using System;
 
 namespace sogeti_portfolio_api.Models {
-    public class Consultant {
-        public Guid? id { get; set; }
-         public string lastName { get; set; }
+    public class Consultant : AbstractModel{
+        public string lastName { get; set; }
         public string firstName { get; set; }
         public string secondName { get; set; }
         public Status status {get;set;}
