@@ -7,12 +7,12 @@ using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Interfaces;
 
 namespace sogeti_portfolio_api.Controllers {
-    [Route ("user")]
+    [Route ("certification")]
     [ApiController]
-    public class UserController : AbstractController<User>  {
+    public class CertificationController : AbstractController<Certification>  {
 
-        public UserController (IElasticService<User> userService)
-        : base(userService)
+        public CertificationController (IElasticService<Certification> certificationService)
+        : base(certificationService)
         {
             // intentionally empty
         }
