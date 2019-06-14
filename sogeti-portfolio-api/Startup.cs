@@ -41,7 +41,6 @@ namespace sogeti_portfolio_api
             services.AddTransient<IElasticService<CoreSkill>, CoreSkillService>();
             services.AddTransient<IElasticService<TechnicalSkill>, TechnicalSkillService>();
             services.AddTransient<IElasticService<Education>, EducationService>();
-            services.AddTransient<IElasticService<Description>, DescriptionService>();
 
             services.AddSwaggerGen(swag =>
             {
