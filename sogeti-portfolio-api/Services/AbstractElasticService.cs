@@ -33,7 +33,7 @@ namespace sogeti_portfolio_api.Services
       public async Task<IEnumerable<JToken>> GetAsync()
       {
          var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-         var response = await client.GetStringAsync($"{client.BaseAddress}/{Path}/_search?q=*");
+         var response = await client.GetStringAsync($"{client.BaseAddress}/{Path}/_search?q=*&size=500");
          var jsonResponse = JObject.Parse(response);
 
          return jsonResponse["hits"]["hits"]
