@@ -34,6 +34,7 @@ namespace sogeti_portfolio_api.Data
             consultant.practice = "Application & Cloud Technologies";
             consultant.title = "Consultant";
             consultant.address = MockAddress ();
+            consultant.summary = "Summary";
             consultant.coreSkills = new CoreSkill[3];
             consultant.coreSkills[0] = new CoreSkill ();
             consultant.coreSkills[0].name = "Teamwork";
@@ -66,10 +67,13 @@ namespace sogeti_portfolio_api.Data
             consultant.certifications = new Certification[2];
             consultant.certifications[0] = new Certification();
             consultant.certifications[0].name = "AWS Engineer 1";
+            consultant.certifications[0].title = "Solutions Architect";
             consultant.certifications[0].dateRecieved = new DateTime(2017, 03, 01);
 
             consultant.certifications[1] = new Certification();
             consultant.certifications[1].name = "AWS Engineer 1";
+            consultant.certifications[0].title = "Solutions Architect";
+
             consultant.certifications[1].dateRecieved = new DateTime(2017, 03, 01);
 
             consultant.experience = new Experience[2];
