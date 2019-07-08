@@ -2,7 +2,7 @@ using System;
 
 namespace sogeti_portfolio_api.Models
 {
-    public class School : AbstractModel
+    public class School
     {
         public string name { get; set; }
     }
