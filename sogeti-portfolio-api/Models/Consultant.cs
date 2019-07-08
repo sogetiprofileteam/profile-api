@@ -11,6 +11,7 @@ namespace sogeti_portfolio_api.Models {
         public string practice { get; set; }
         public string fax { get; set; }
         public string email { get; set; }
+        public string summary { get; set; }
         public Address address { get; set; }
         public CoreSkill[] coreSkills { get; set; }
         public TechnicalSkill[] technicalSkills { get; set; }
