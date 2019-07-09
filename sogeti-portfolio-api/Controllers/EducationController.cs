@@ -8,9 +8,9 @@ namespace sogeti_portfolio_api.Controllers
 {
     [Route ("education")]
     [ApiController]
-    public class EducationController : AbstractController<School>  {
+    public class EducationController : AbstractController<Education>  {
 
-        public EducationController (IElasticService<School> educationService) : base(educationService)
+        public EducationController (IElasticService<Education> educationService) : base(educationService)
         {
             // intentionally empty
         }
