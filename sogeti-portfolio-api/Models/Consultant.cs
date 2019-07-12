@@ -12,6 +12,10 @@ namespace sogeti_portfolio_api.Models {
         public string fax { get; set; }
         public string email { get; set; }
         public string summary { get; set; }
+        public string urlLinkedIn { get; set; }
+        public string urlGitHub { get; set; }
+        public string urlWordpress {get ; set; }
+        public string urlPersonal { get ; set; }
         public Address address { get; set; }
         public CoreSkill[] coreSkills { get; set; }
         public TechnicalSkill[] technicalSkills { get; set; }
