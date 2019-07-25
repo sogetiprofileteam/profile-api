@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using sogeti_portfolio_api.Interfaces;
@@ -29,6 +30,7 @@ namespace sogeti_portfolio_api.Controllers
       }
 
       [HttpGet ("{id}")]
+      [Authorize("Austin Unit")]
       public async Task<IActionResult> Get(string id) 
       {
          JToken elements = await _service.GetAsync(id);
@@ -40,6 +42,7 @@ namespace sogeti_portfolio_api.Controllers
       }
 
       [HttpPost]
+      [Authorize]
       public async Task<IActionResult> Post(T element)
       {
          await _service.CreateAsync(element);
@@ -47,6 +50,7 @@ namespace sogeti_portfolio_api.Controllers
       }
 
       [HttpPut]
+      [Authorize]
       public async Task<IActionResult> Put(T element)
       {
          await _service.UpdateAsync(element);
@@ -54,6 +58,7 @@ namespace sogeti_portfolio_api.Controllers
       }
 
       [HttpDelete ("{id}")]
+      [Authorize]
       public async Task<IActionResult> Delete(string id)
       {
          await _service.DeleteAsync(id);

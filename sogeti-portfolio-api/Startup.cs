@@ -10,6 +10,9 @@ using sogeti_portfolio_api.Models;
 using System.Text;
 using System.Net.Http.Headers;
 using sogeti_portfolio_api.Services;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication;
 
 namespace sogeti_portfolio_api
 {
@@ -28,13 +31,26 @@ namespace sogeti_portfolio_api
             services.AddCors(options => {
                 options.AddPolicy("AllowSpecificOrigins",
                     builder => {
-                        builder.WithOrigins("http://localhost:4200")
+                        builder.WithOrigins("https://localhost:4200/")
                             .AllowAnyMethod()
                             .AllowAnyHeader();
                     });
             });
             services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme).AddAzureAD(options => Configuration.Bind("AzureAd", options));
+            
+            services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
+            {
+                options.Authority = options.Authority + "/v2.0/";         // Microsoft identity platform
+
+                options.TokenValidationParameters.ValidateIssuer = false; // accept several tenants (here simplified)
+            });
+
+            services.AddAuthorization(options => {
+               options.AddPolicy("Austin Unit", policyBuilder => policyBuilder.RequireClaim("groups", "350d0d74-1082-4d28-887f-4bf3c67b4d63")); 
+            });
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
             services.AddTransient<IElasticService<Consultant>, ConsultantService>();
@@ -60,6 +76,7 @@ namespace sogeti_portfolio_api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
             app.UseCors("AllowSpecificOrigins");
             if (env.IsDevelopment())
             {
