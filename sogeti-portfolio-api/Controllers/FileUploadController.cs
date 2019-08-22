@@ -18,16 +18,16 @@ namespace sogeti_portfolio_api.Controllers
         private CloudBlobContainer _container;
         private CloudStorageAccount _storageAccount;
         private CloudBlockBlob _blockBlob;
-        public FileUploadController(CloudBlobClient blobClient, CloudBlobContainer container, CloudStorageAccount storageAccount, CloudBlockBlob blockBlob)
-        {
-            _blobClient =  blobClient;
-            _container = container;
-            _blockBlob = blockBlob;
-            _storageAccount = storageAccount;
-            _storageAccount = CloudStorageAccount.Parse(_conn);
-            _blobClient = _storageAccount.CreateCloudBlobClient();
-            _container = _blobClient.GetContainerReference("images");
-        }
+        // public FileUploadController(CloudBlobClient blobClient, CloudBlobContainer container, CloudStorageAccount storageAccount, CloudBlockBlob blockBlob)
+        // {
+        //     _blobClient =  blobClient;
+        //     _container = container;
+        //     _blockBlob = blockBlob;
+        //     _storageAccount = storageAccount;
+        //     _storageAccount = CloudStorageAccount.Parse(_conn);
+        //     _blobClient = _storageAccount.CreateCloudBlobClient();
+        //     _container = _blobClient.GetContainerReference("images");
+        // }
 
         [HttpGet("[Action]")]
         public async Task<IActionResult> Get(IFormFile files)
@@ -49,10 +49,13 @@ namespace sogeti_portfolio_api.Controllers
             });
 
         }
-
         [HttpPost("[Action]")]
         public async Task<IActionResult> SaveFile(IFormFile files)
         {
+
+            _storageAccount = CloudStorageAccount.Parse(_conn);
+            _blobClient = _storageAccount.CreateCloudBlobClient();
+            _container = _blobClient.GetContainerReference("images");
             //Get a reference to a blob
             _blockBlob = _container.GetBlockBlobReference(files.FileName);
 
@@ -69,6 +72,7 @@ namespace sogeti_portfolio_api.Controllers
                 size = _blockBlob.Properties.Length
             });
         }
+
 
         [HttpPost("[Action]")]
         async public Task<IActionResult> SaveAsString(IFormFile files, string photo)
