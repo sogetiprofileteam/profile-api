@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using sogeti_portfolio_api.Interfaces;
@@ -16,7 +17,8 @@ namespace sogeti_portfolio_api.Controllers
       {
          _service = service;
       }
-
+      
+      [Authorize]
       [HttpGet]
       public async Task<IActionResult> Get() 
       {

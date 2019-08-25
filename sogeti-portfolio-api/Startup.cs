@@ -9,6 +9,7 @@ using sogeti_portfolio_api.Interfaces;
 using sogeti_portfolio_api.Models;
 using System.Text;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using sogeti_portfolio_api.Services;
 
 namespace sogeti_portfolio_api
@@ -28,11 +29,21 @@ namespace sogeti_portfolio_api
             services.AddCors(options => {
                 options.AddPolicy("AllowSpecificOrigins",
                     builder => {
-                        builder.WithOrigins("http://localhost:4200")
+                        builder.WithOrigins("https://localhost:4200")
                             .AllowAnyMethod()
                             .AllowAnyHeader();
                     });
             });
+            
+            services.AddAuthentication(options => { options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
+                .AddJwtBearer("Bearer", opts =>
+                {
+                    opts.Authority = $"https://login.microsoftonline.com/{Configuration["AzureAdB2C:Tenant"]}/{Configuration["AzureAdB2C:Policy"]}/v2.0";
+                    opts.SaveToken = true;
+                    opts.Audience = Configuration["AzureAdB2C:ClientId"];
+                    opts.Events = new JwtBearerEvents();
+                }).AddCookie();
+
             services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
