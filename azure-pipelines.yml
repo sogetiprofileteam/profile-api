@@ -13,6 +13,9 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+# Change directory
 - script: cd sogeti-portfolio-api
-- script: dotnet build --configuration $(buildConfiguration)
+
+# Build release
+- script: dotnet build -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
   displayName: 'dotnet build $(buildConfiguration)'
