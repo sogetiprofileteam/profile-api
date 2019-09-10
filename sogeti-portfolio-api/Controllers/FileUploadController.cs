@@ -1,8 +1,11 @@
 using System.Threading.Tasks;
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.File;
+
 
 namespace sogeti_portfolio_api.Controllers
 {
@@ -12,7 +15,7 @@ namespace sogeti_portfolio_api.Controllers
     {
 
         // add the connection string in the app.config
-        private string _conn = "DefaultEndpointsProtocol=https;AccountName=profileappphotostorage;AccountKey=Rz4Bva3VkAipBe2pTE3rGKJyXJYUx9cG4AunSRBC5S9p1EFebeaMFAp3V1jIoCoNc3g+GTjuoDz7PCcFj089SA==;EndpointSuffix=core.windows.net";
+        private string _conn = Environment.GetEnvironmentVariable("CONNECT_STR");
         //look into creating interfaces for this setup and using dependency injection to use the functions.
         private CloudBlobClient _blobClient;
         private CloudBlobContainer _container;
@@ -30,57 +33,48 @@ namespace sogeti_portfolio_api.Controllers
         // }
 
         [HttpGet("[Action]")]
-        public async Task<IActionResult> Get(IFormFile files)
+        public async Task<IActionResult> GetProfilePic(string fileName)
         {
-            _blockBlob = _container.GetBlockBlobReference(files.FileName);
-
-            //Create or overwrite the blob with contents of a local file
-            using (var fileStream = files.OpenReadStream())
-            {
-                await _blockBlob.UploadFromStreamAsync(fileStream);
-
-            }
-
-            return Json(new
-            {
-                name = _blockBlob.Name,
-                uri = _blockBlob.Uri,
-                size = _blockBlob.Properties.Length
-            });
-
+   
+           _blockBlob = _container.GetBlockBlobReference(fileName);
+            _blockBlob.Properties.ContentType = "image/jpg";
+            await _blockBlob.SetPropertiesAsync();
+            return Ok(_blockBlob);
         }
-        [HttpPost("[Action]")]
-        public async Task<IActionResult> SaveFile(IFormFile files)
-        {
 
-            _storageAccount = CloudStorageAccount.Parse(_conn);
+        //Receives file from front end and sends to azure blob
+       [HttpPost("[Action]")]
+        public async Task<IActionResult> UploadFileAsync(IFormFile file)
+        {
+            _storageAccount = null;
+            if (CloudStorageAccount.TryParse(_conn, out _storageAccount)){
+             _storageAccount = CloudStorageAccount.Parse(_conn);
             _blobClient = _storageAccount.CreateCloudBlobClient();
             _container = _blobClient.GetContainerReference("images");
+             await _container.CreateIfNotExistsAsync();
+
             //Get a reference to a blob
-            _blockBlob = _container.GetBlockBlobReference(files.FileName);
+            _blockBlob = _container.GetBlockBlobReference(file.FileName);
+            _blockBlob.Properties.ContentType = "image/jpg";
+            
+          //  await _blobClient.GetBlobReferenceFromServerAsync(blob.Uri);
+            
 
             //Create or overwrite the blob with contents of a local file
-            using (var fileStream = files.OpenReadStream())
-            {
-                await _blockBlob.UploadFromStreamAsync(fileStream);
+            await _blockBlob.UploadFromStreamAsync(file.OpenReadStream());
+            return Ok(_blockBlob.Uri);
+             }
 
-            }
-            return Json(new
-            {
-                name = _blockBlob.Name,
-                uri = _blockBlob.Uri,
-                size = _blockBlob.Properties.Length
-            });
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
 
+        
         [HttpPost("[Action]")]
         async public Task<IActionResult> SaveAsString(IFormFile files, string photo)
         {
             photo = files.FileName;
             _blockBlob = _container.GetBlockBlobReference(files.FileName);
-            //CloudBlockBlob blockBlob = container.GetBlockBlobReference(photo);
-
             //Create or overwrite the blob with contents of a local file
             using (var fileStream = files.OpenReadStream())
             {
@@ -94,5 +88,7 @@ namespace sogeti_portfolio_api.Controllers
                 size = _blockBlob.Properties.Length
             });
         }
+
+        
     }
 }
