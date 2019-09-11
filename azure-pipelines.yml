@@ -16,6 +16,14 @@ steps:
 # Change directory
 - script: cd sogeti-portfolio-api
 
-# Build release
+# Build
 - script: dotnet build -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
   displayName: 'dotnet build $(buildConfiguration)'
+
+# Publish release
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
