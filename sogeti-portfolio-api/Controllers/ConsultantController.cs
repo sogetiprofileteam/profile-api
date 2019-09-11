@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Interfaces;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace sogeti_portfolio_api.Controllers
 {

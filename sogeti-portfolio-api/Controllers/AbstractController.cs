@@ -18,7 +18,6 @@ namespace sogeti_portfolio_api.Controllers
          _service = service;
       }
       
-      [Authorize]
       [HttpGet]
       public async Task<IActionResult> Get() 
       {
@@ -29,7 +28,7 @@ namespace sogeti_portfolio_api.Controllers
 
          return NotFound();
       }
-
+      
       [HttpGet ("{id}")]
       public async Task<IActionResult> Get(string id) 
       {
