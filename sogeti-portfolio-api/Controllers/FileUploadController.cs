@@ -35,41 +35,72 @@ namespace sogeti_portfolio_api.Controllers
         [HttpGet("[Action]")]
         public async Task<IActionResult> GetProfilePic(string fileName)
         {
-   
-           _blockBlob = _container.GetBlockBlobReference(fileName);
-            _blockBlob.Properties.ContentType = "image/jpg";
-            await _blockBlob.SetPropertiesAsync();
-            return Ok(_blockBlob);
+
+            try
+            {
+                var request = await HttpContext.Request.ReadFormAsync();
+                if (request.Files == null)
+                {
+                    return BadRequest("Could not get file");
+                }
+                var files = request.Files;
+
+                for (int i = 0; i < files.Count; i++)
+                {
+                    if (fileName == files[i].FileName)
+                    {
+                        _blockBlob = _container.GetBlockBlobReference(files[i].FileName);
+                        using (var fileStream = files[i].OpenReadStream())
+                        {
+                            await _blockBlob.DownloadToStreamAsync(fileStream);
+
+                        }
+                    }
+                }
+                return Ok(_blockBlob.Uri);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+                // return Json(new {
+                //     error = "Couldn't find file"
+                // });
+            }
+
+            //    _blockBlob = _container.GetBlockBlobReference(fileName);
+            //     _blockBlob.Properties.ContentType = "image/jpg";
+            //     await _blockBlob.SetPropertiesAsync();
+            //     return Ok(_blockBlob);
         }
 
         //Receives file from front end and sends to azure blob
-       [HttpPost("[Action]")]
+        [HttpPost("[Action]")]
         public async Task<IActionResult> UploadFileAsync(IFormFile file)
         {
             _storageAccount = null;
-            if (CloudStorageAccount.TryParse(_conn, out _storageAccount)){
-             _storageAccount = CloudStorageAccount.Parse(_conn);
-            _blobClient = _storageAccount.CreateCloudBlobClient();
-            _container = _blobClient.GetContainerReference("images");
-             await _container.CreateIfNotExistsAsync();
+            if (CloudStorageAccount.TryParse(_conn, out _storageAccount))
+            {
+                _storageAccount = CloudStorageAccount.Parse(_conn);
+                _blobClient = _storageAccount.CreateCloudBlobClient();
+                _container = _blobClient.GetContainerReference("images");
+                await _container.CreateIfNotExistsAsync();
 
-            //Get a reference to a blob
-            _blockBlob = _container.GetBlockBlobReference(file.FileName);
-            _blockBlob.Properties.ContentType = "image/jpg";
-            
-          //  await _blobClient.GetBlobReferenceFromServerAsync(blob.Uri);
-            
+                //Get a reference to a blob
+                _blockBlob = _container.GetBlockBlobReference(file.FileName);
+                _blockBlob.Properties.ContentType = "image/jpg";
 
-            //Create or overwrite the blob with contents of a local file
-            await _blockBlob.UploadFromStreamAsync(file.OpenReadStream());
-            return Ok(_blockBlob.Uri);
-             }
+                //  await _blobClient.GetBlobReferenceFromServerAsync(blob.Uri);
+
+                //Create or overwrite the blob with contents of a local file
+                await _blockBlob.UploadFromStreamAsync(file.OpenReadStream());
+                return Ok(_blockBlob.Uri);
+            }
 
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
 
-        
+
         [HttpPost("[Action]")]
         async public Task<IActionResult> SaveAsString(IFormFile files, string photo)
         {
@@ -89,6 +120,6 @@ namespace sogeti_portfolio_api.Controllers
             });
         }
 
-        
+
     }
 }
