@@ -62,15 +62,13 @@ namespace sogeti_portfolio_api.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
-                // return Json(new {
-                //     error = "Couldn't find file"
-                // });
             }
 
-            //    _blockBlob = _container.GetBlockBlobReference(fileName);
-            //     _blockBlob.Properties.ContentType = "image/jpg";
-            //     await _blockBlob.SetPropertiesAsync();
-            //     return Ok(_blockBlob);
+                    /*   _blockBlob = _container.GetBlockBlobReference(fileName);
+                        _blockBlob.Properties.ContentType = "image/jpg";
+                        await _blockBlob.SetPropertiesAsync();
+                        return Ok(_blockBlob);
+                    */
         }
 
         //Receives file from front end and sends to azure blob
