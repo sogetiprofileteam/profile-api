@@ -21,16 +21,18 @@ namespace sogeti_portfolio_api.Controllers
         private CloudBlobContainer _container;
         private CloudStorageAccount _storageAccount;
         private CloudBlockBlob _blockBlob;
-        // public FileUploadController(CloudBlobClient blobClient, CloudBlobContainer container, CloudStorageAccount storageAccount, CloudBlockBlob blockBlob)
-        // {
-        //     _blobClient =  blobClient;
-        //     _container = container;
-        //     _blockBlob = blockBlob;
-        //     _storageAccount = storageAccount;
-        //     _storageAccount = CloudStorageAccount.Parse(_conn);
-        //     _blobClient = _storageAccount.CreateCloudBlobClient();
-        //     _container = _blobClient.GetContainerReference("images");
-        // }
+/* 
+        public FileUploadController(CloudBlobClient blobClient, CloudBlobContainer container, CloudStorageAccount storageAccount, CloudBlockBlob blockBlob)
+        {
+            _blobClient = blobClient;
+            _container = container;
+            _blockBlob = blockBlob;
+            _storageAccount = storageAccount;
+            _storageAccount = CloudStorageAccount.Parse(_conn);
+            _blobClient = _storageAccount.CreateCloudBlobClient();
+            _container = _blobClient.GetContainerReference("images");
+        }
+*/
 
         [HttpGet("[Action]")]
         public async Task<IActionResult> GetProfilePic(string fileName)
@@ -63,12 +65,6 @@ namespace sogeti_portfolio_api.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
-
-                    /*   _blockBlob = _container.GetBlockBlobReference(fileName);
-                        _blockBlob.Properties.ContentType = "image/jpg";
-                        await _blockBlob.SetPropertiesAsync();
-                        return Ok(_blockBlob);
-                    */
         }
 
         //Receives file from front end and sends to azure blob
@@ -95,27 +91,6 @@ namespace sogeti_portfolio_api.Controllers
             }
 
             return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-
-
-
-        [HttpPost("[Action]")]
-        async public Task<IActionResult> SaveAsString(IFormFile files, string photo)
-        {
-            photo = files.FileName;
-            _blockBlob = _container.GetBlockBlobReference(files.FileName);
-            //Create or overwrite the blob with contents of a local file
-            using (var fileStream = files.OpenReadStream())
-            {
-                await _blockBlob.UploadFromStreamAsync(fileStream);
-
-            }
-            return Json(new
-            {
-                name = _blockBlob.Name,
-                uri = _blockBlob.Uri,
-                size = _blockBlob.Properties.Length
-            });
         }
 
 
