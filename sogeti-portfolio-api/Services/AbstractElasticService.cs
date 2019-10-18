@@ -19,21 +19,21 @@ namespace sogeti_portfolio_api.Services
       {
          HttpClient client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
          element.id = Guid.NewGuid();
-         var response = await client.PostAsJsonAsync($"{client.BaseAddress}/{Path}/_doc/{element.id}", element);
+         var response = await client.PostAsJsonAsync($"{client.BaseAddress}{Path}/_doc/{element.id}", element);
          response.EnsureSuccessStatusCode();
       }
 
       public async Task DeleteAsync(string id)
       {
          var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-         var response = await client.DeleteAsync($"{client.BaseAddress}/{Path}/_doc/{id}");
+         var response = await client.DeleteAsync($"{client.BaseAddress}{Path}/_doc/{id}");
          response.EnsureSuccessStatusCode();
       }
 
       public async Task<IEnumerable<JToken>> GetAsync()
       {
          var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-         var response = await client.GetStringAsync($"{client.BaseAddress}/{Path}/_search?q=*&size=500");
+         var response = await client.GetStringAsync($"{client.BaseAddress}{Path}/_search?q=*&size=500");
          var jsonResponse = JObject.Parse(response);
 
          return jsonResponse["hits"]["hits"]
@@ -43,7 +43,7 @@ namespace sogeti_portfolio_api.Services
       public async Task<JToken> GetAsync(string id)
       {
          var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-         var response = await client.GetStringAsync($"{client.BaseAddress}/{Path}/_doc/{id}");
+         var response = await client.GetStringAsync($"{client.BaseAddress}{Path}/_doc/{id}");
          var jsonResponse = JObject.Parse(response);
             
          if (jsonResponse["found"].Value<bool>())
@@ -55,7 +55,7 @@ namespace sogeti_portfolio_api.Services
       public async Task UpdateAsync(T element)
       {
          var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-         var response = await client.PutAsJsonAsync($"{client.BaseAddress}/{Path}/_doc/{element.id}", element);
+         var response = await client.PutAsJsonAsync($"{client.BaseAddress}{Path}/_doc/{element.id}", element);
          response.EnsureSuccessStatusCode();
       }
    }
