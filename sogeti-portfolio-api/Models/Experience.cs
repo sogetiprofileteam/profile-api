@@ -6,6 +6,7 @@ namespace sogeti_portfolio_api.Models {
         public string title { get; set; }
         public DateTime startDate { get; set; }
         public DateTime? endDate { get; set; }
+        public string summary { get; set; }
         public Description[] descriptions { get; set; }
     }
 }
