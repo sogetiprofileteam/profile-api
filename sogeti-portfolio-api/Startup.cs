@@ -1,4 +1,9 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +15,7 @@ using sogeti_portfolio_api.Models;
 using System.Text;
 using System.Net.Http.Headers;
 using sogeti_portfolio_api.Services;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace sogeti_portfolio_api
 {
@@ -25,6 +31,9 @@ namespace sogeti_portfolio_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+
             services.AddCors(options => {
                 options.AddPolicy("AllowSpecificOrigins",
                     builder => {
@@ -33,7 +42,23 @@ namespace sogeti_portfolio_api
                             .AllowAnyHeader();
                     });
             });
-            services.AddMvc()
+
+            services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
+            {
+                options.Authority = options.Authority + "/v2.0/";         // Microsoft identity platform
+
+                options.TokenValidationParameters.ValidateIssuer = false; // accept several tenants (here simplified)
+            });
+
+
+            services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+
+            })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
