@@ -6,7 +6,6 @@ using Newtonsoft.Json.Linq;
 using sogeti_portfolio_api.Interfaces;
 using sogeti_portfolio_api.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace sogeti_portfolio_api.Controllers
 {
@@ -19,7 +18,7 @@ namespace sogeti_portfolio_api.Controllers
          _service = service;
       }
 
-      [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+      
       [HttpGet]
       public async Task<IActionResult> Get() 
       {

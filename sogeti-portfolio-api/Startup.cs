@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
@@ -31,34 +32,26 @@ namespace sogeti_portfolio_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
-                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
-
             services.AddCors(options => {
                 options.AddPolicy("AllowSpecificOrigins",
                     builder => {
-                        builder.WithOrigins("http://localhost:4200")
+                        builder.WithOrigins("https://localhost:4200")
                             .AllowAnyMethod()
                             .AllowAnyHeader();
                     });
             });
 
-            services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
-            {
-                options.Authority = options.Authority + "/v2.0/";         // Microsoft identity platform
+            services.AddAuthentication(options => { options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
+                .AddJwtBearer("Bearer", opts =>
+                {
+                    opts.Authority = $"https://login.microsoftonline.com/{Configuration["AzureAdB2C:Tenant"]}/{Configuration["AzureAdB2C:Policy"]}/v2.0";
+                    opts.SaveToken = true;
+                    opts.Audience = Configuration["AzureAdB2C:ClientId"];
+                    opts.Events = new JwtBearerEvents();
+                }).AddCookie();
 
-                options.TokenValidationParameters.ValidateIssuer = false; // accept several tenants (here simplified)
-            });
 
-
-            services.AddMvc(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-
-            })
+            services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
@@ -97,6 +90,7 @@ namespace sogeti_portfolio_api
             }
             app.UseSwagger();
             app.UseSwaggerUI(swag => swag.SwaggerEndpoint("/swagger/v1/swagger.json", "DEV - Sogeti Profile API"));
+            app.UseAuthentication();
             app.UseMvc();
         }
     }
