@@ -9,11 +9,11 @@ using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Services
 {
-   public class AbstractSqlService<T> : ISqlService<T> where T : AbstractModel
+   public class AbstractService<T> : IService<T> where T : AbstractModel
    {
       private readonly IHttpClientFactory _httpClientFactory;
       protected string Path;
-      protected AbstractSqlService(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
+      protected AbstractService(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
       public async Task CreateAsync(HttpContent element)
       {

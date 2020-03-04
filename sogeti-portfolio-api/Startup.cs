@@ -38,12 +38,12 @@ namespace sogeti_portfolio_api
             .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
-            services.AddTransient<ISqlService<Consultant>, ConsultantService>();
-            services.AddTransient<ISqlService<CoreSkill>, CoreSkillService>();
-            services.AddTransient<ISqlService<TechnicalSkill>, TechnicalSkillService>();
-            services.AddTransient<ISqlService<Education>, EducationService>();
-            services.AddTransient<ISqlService<User>, UserService>();
-            services.AddTransient<ISqlService<Certification>, CertificationService>();
+            services.AddTransient<IService<Consultant>, ConsultantService>();
+            services.AddTransient<IService<CoreSkill>, CoreSkillService>();
+            services.AddTransient<IService<TechnicalSkill>, TechnicalSkillService>();
+            services.AddTransient<IService<Education>, EducationService>();
+            services.AddTransient<IService<User>, UserService>();
+            services.AddTransient<IService<Certification>, CertificationService>();
 
             services.AddSwaggerGen(swag =>
             {

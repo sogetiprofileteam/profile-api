@@ -3,7 +3,7 @@ using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Services
 {
-    public class ConsultantService : AbstractSqlService<Consultant>
+    public class ConsultantService : AbstractService<Consultant>
     {
         public ConsultantService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {

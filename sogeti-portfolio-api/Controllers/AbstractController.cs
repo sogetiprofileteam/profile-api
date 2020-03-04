@@ -11,9 +11,9 @@ namespace sogeti_portfolio_api.Controllers
 {
    public class AbstractController<T> : ControllerBase where T : AbstractModel
    {
-      private readonly ISqlService<T> _service;
+      private readonly IService<T> _service;
 
-      protected AbstractController(ISqlService<T> service)
+      protected AbstractController(IService<T> service)
       {
          _service = service;
       }

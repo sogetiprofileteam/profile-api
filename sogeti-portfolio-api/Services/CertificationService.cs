@@ -3,7 +3,7 @@ using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Services
 {
-    public class CertificationService : AbstractSqlService<Certification>
+    public class CertificationService : AbstractService<Certification>
     {
         public CertificationService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {

@@ -6,7 +6,7 @@ using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Interfaces
 {
-    public interface ISqlService<T> where T : AbstractModel
+    public interface IService<T> where T : AbstractModel
     {
         Task<IEnumerable<JToken>> GetAsync();
 

@@ -10,7 +10,7 @@ namespace sogeti_portfolio_api.Controllers
     [ApiController]
     public class EducationController : AbstractController<Education>  {
 
-        public EducationController (ISqlService<Education> educationService) : base(educationService)
+        public EducationController (IService<Education> educationService) : base(educationService)
         {
             // intentionally empty
         }
