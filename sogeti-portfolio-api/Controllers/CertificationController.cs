@@ -11,7 +11,7 @@ namespace sogeti_portfolio_api.Controllers {
     [ApiController]
     public class CertificationController : AbstractController<Certification>  {
 
-        public CertificationController (IElasticService<Certification> certificationService)
+        public CertificationController (ISqlService<Certification> certificationService)
         : base(certificationService)
         {
             // intentionally empty

@@ -9,30 +9,30 @@ using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Services
 {
-   public class AbstractElasticService<T> : IElasticService<T> where T : AbstractModel
+   public class AbstractSqlService<T> : ISqlService<T> where T : AbstractModel
    {
       private readonly IHttpClientFactory _httpClientFactory;
       protected string Path;
-      protected AbstractElasticService(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
+      protected AbstractSqlService(IHttpClientFactory httpClientFactory) => _httpClientFactory = httpClientFactory;
 
-      public async Task CreateAsync(T element)
+      public async Task CreateAsync(HttpContent element)
       {
-         HttpClient client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-         element.id = Guid.NewGuid();
-         var response = await client.PostAsJsonAsync($"{client.BaseAddress}{Path}/_doc/{element.id}", element);
+         HttpClient client = _httpClientFactory.CreateClient(HttpClients.SqlClient);
+         //element = Guid.NewGuid();
+         var response = await client.PutAsync($"{client.BaseAddress}{Path}/_doc/{element}", element);
          response.EnsureSuccessStatusCode();
       }
 
       public async Task DeleteAsync(string id)
       {
-         var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
+         var client = _httpClientFactory.CreateClient(HttpClients.SqlClient);
          var response = await client.DeleteAsync($"{client.BaseAddress}{Path}/_doc/{id}");
          response.EnsureSuccessStatusCode();
       }
 
       public async Task<IEnumerable<JToken>> GetAsync()
       {
-         var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
+         var client = _httpClientFactory.CreateClient(HttpClients.SqlClient);
          var response = await client.GetStringAsync($"{client.BaseAddress}{Path}/_search?q=*&size=500");
          var jsonResponse = JObject.Parse(response);
 
@@ -42,7 +42,7 @@ namespace sogeti_portfolio_api.Services
 
       public async Task<JToken> GetAsync(string id)
       {
-         var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
+         var client = _httpClientFactory.CreateClient(HttpClients.SqlClient);
          var response = await client.GetStringAsync($"{client.BaseAddress}{Path}/_doc/{id}");
          var jsonResponse = JObject.Parse(response);
             
@@ -52,10 +52,10 @@ namespace sogeti_portfolio_api.Services
          return null;
       }
 
-      public async Task UpdateAsync(T element)
+      public async Task UpdateAsync(HttpContent element)
       {
-         var client = _httpClientFactory.CreateClient(HttpClients.ElasticClient);
-         var response = await client.PutAsJsonAsync($"{client.BaseAddress}{Path}/_doc/{element.id}", element);
+         var client = _httpClientFactory.CreateClient(HttpClients.SqlClient);
+         var response = await client.PutAsync($"{client.BaseAddress}{Path}/_doc/{element}", element);
          response.EnsureSuccessStatusCode();
       }
    }

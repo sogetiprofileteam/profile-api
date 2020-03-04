@@ -14,7 +14,7 @@ namespace sogeti_portfolio_api.Controllers {
     [Route ("technicalskills")]
     [ApiController]
     public class TechnicalSkillsController : AbstractController<TechnicalSkill> {
-        public TechnicalSkillsController (IElasticService<TechnicalSkill> technicalSkillService)
+        public TechnicalSkillsController (ISqlService<TechnicalSkill> technicalSkillService)
         : base(technicalSkillService)
         {
             // intentionally empty

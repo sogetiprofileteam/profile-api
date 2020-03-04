@@ -10,7 +10,7 @@ namespace sogeti_portfolio_api.Controllers
     [ApiController]
     public class CoreSkillsController : AbstractController<CoreSkill> {
 
-        public CoreSkillsController(IElasticService<CoreSkill> coreSkillService) : base(coreSkillService)
+        public CoreSkillsController(ISqlService<CoreSkill> coreSkillService) : base(coreSkillService)
         {
             // intentionally empty
         }

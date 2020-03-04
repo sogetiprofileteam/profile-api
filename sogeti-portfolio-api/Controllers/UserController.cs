@@ -11,7 +11,7 @@ namespace sogeti_portfolio_api.Controllers {
     [ApiController]
     public class UserController : AbstractController<User>  {
 
-        public UserController (IElasticService<User> userService)
+        public UserController (ISqlService<User> userService)
         : base(userService)
         {
             // intentionally empty

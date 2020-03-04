@@ -10,6 +10,7 @@ using sogeti_portfolio_api.Models;
 using System.Text;
 using System.Net.Http.Headers;
 using sogeti_portfolio_api.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace sogeti_portfolio_api
 {
@@ -33,32 +34,32 @@ namespace sogeti_portfolio_api
                             .AllowAnyHeader();
                     });
             });
-            services.AddMvc()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options => options.EnableEndpointRouting =false)
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
-            services.AddTransient<IElasticService<Consultant>, ConsultantService>();
-            services.AddTransient<IElasticService<CoreSkill>, CoreSkillService>();
-            services.AddTransient<IElasticService<TechnicalSkill>, TechnicalSkillService>();
-            services.AddTransient<IElasticService<Education>, EducationService>();
-            services.AddTransient<IElasticService<User>, UserService>();
-            services.AddTransient<IElasticService<Certification>, CertificationService>();
+            services.AddTransient<ISqlService<Consultant>, ConsultantService>();
+            services.AddTransient<ISqlService<CoreSkill>, CoreSkillService>();
+            services.AddTransient<ISqlService<TechnicalSkill>, TechnicalSkillService>();
+            services.AddTransient<ISqlService<Education>, EducationService>();
+            services.AddTransient<ISqlService<User>, UserService>();
+            services.AddTransient<ISqlService<Certification>, CertificationService>();
 
             services.AddSwaggerGen(swag =>
             {
                 swag.SwaggerDoc("v1", new Info { Title = "DEV - Sogeti Profile API", Version = "1.0" });
             });
 
-            var elasticAuth = ASCIIEncoding.ASCII.GetBytes(Configuration["elasticsearch:auth"]);
-            services.AddHttpClient("Elastic", c =>
+            var elasticAuth = ASCIIEncoding.ASCII.GetBytes(Configuration["sqlserver:auth"]);
+            services.AddHttpClient("sqlserver", c =>
             {
-                c.BaseAddress = new Uri(Configuration["elasticsearch:url"]);
+                c.BaseAddress = new Uri(Configuration["sqlserver:url"]);
                 c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(elasticAuth));
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors("AllowSpecificOrigins");
             if (env.IsDevelopment())

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -10,9 +11,9 @@ namespace sogeti_portfolio_api.Controllers
 {
    public class AbstractController<T> : ControllerBase where T : AbstractModel
    {
-      private readonly IElasticService<T> _service;
+      private readonly ISqlService<T> _service;
 
-      protected AbstractController(IElasticService<T> service)
+      protected AbstractController(ISqlService<T> service)
       {
          _service = service;
       }
@@ -40,14 +41,14 @@ namespace sogeti_portfolio_api.Controllers
       }
 
       [HttpPost]
-      public async Task<IActionResult> Post(T element)
+      public async Task<IActionResult> Post(HttpContent element)
       {
          await _service.CreateAsync(element);
          return CreatedAtAction(nameof(Get), element);
       }
 
       [HttpPut]
-      public async Task<IActionResult> Put(T element)
+      public async Task<IActionResult> Put(HttpContent element)
       {
          await _service.UpdateAsync(element);
          return Ok();

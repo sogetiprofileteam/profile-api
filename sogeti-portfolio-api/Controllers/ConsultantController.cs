@@ -11,7 +11,7 @@ namespace sogeti_portfolio_api.Controllers
     [ApiController]
     public class ConsultantController : AbstractController<Consultant>
     {
-        public ConsultantController (IElasticService<Consultant> consultantService) : base (consultantService)
+        public ConsultantController (ISqlService<Consultant> consultantService) : base (consultantService)
         {
             // intentionally empty
         }
