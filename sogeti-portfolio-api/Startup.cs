@@ -11,6 +11,9 @@ using System.Text;
 using System.Net.Http.Headers;
 using sogeti_portfolio_api.Services;
 using Microsoft.Extensions.Hosting;
+using AutoMapper;
+using Microsoft.OpenApi.Models;
+using sogeti_portfolio_api.Data;
 
 namespace sogeti_portfolio_api
 {
@@ -36,18 +39,23 @@ namespace sogeti_portfolio_api
             });
             services.AddMvc(options => options.EnableEndpointRouting =false)
             .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
             services.AddTransient<IService<Consultant>, ConsultantService>();
             services.AddTransient<IService<CoreSkill>, CoreSkillService>();
             services.AddTransient<IService<TechnicalSkill>, TechnicalSkillService>();
             services.AddTransient<IService<Education>, EducationService>();
-            services.AddTransient<IService<User>, UserService>();
+            services.AddTransient<IRepository, Repository>();
+            services.AddTransient<UserService>();
+            //services.AddTransient<IService<User>, UserService>();
             services.AddTransient<IService<Certification>, CertificationService>();
 
             services.AddSwaggerGen(swag =>
             {
-                swag.SwaggerDoc("v1", new Info { Title = "DEV - Sogeti Profile API", Version = "1.0" });
+                swag.SwaggerDoc("v1", new OpenApiInfo { Title = "DEV - Sogeti Profile API"});
             });
 
             var elasticAuth = ASCIIEncoding.ASCII.GetBytes(Configuration["sqlserver:auth"]);

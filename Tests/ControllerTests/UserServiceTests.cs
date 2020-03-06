@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json.Linq;
 using sogeti_portfolio_api.Controllers;
+using sogeti_portfolio_api.Data;
 using sogeti_portfolio_api.Interfaces;
 using sogeti_portfolio_api.Models;
 using sogeti_portfolio_api.Services;
@@ -16,11 +17,11 @@ namespace Tests.ControllerTests
    {
       [Fact]
       public void TestSqLite() {
-         UserService service = new UserService(null);
+         // UserService service = new UserService(IRepository repo, IMapper map);
          
-         string returnValue = service.TestSQLite();
+         // var returnValue = service.GetUsers();
          
-         Debug.WriteLine(returnValue);
+         // Debug.WriteLine(returnValue);
       }
    }
 }
