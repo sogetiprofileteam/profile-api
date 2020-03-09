@@ -44,14 +44,15 @@ namespace sogeti_portfolio_api
             services.AddAutoMapper(typeof(Startup));
             
             services.AddScoped<IJsonSerialization, JsonSerialize>();
-            services.AddTransient<IService<Consultant>, ConsultantService>();
             services.AddTransient<IService<CoreSkill>, CoreSkillService>();
             services.AddTransient<IService<TechnicalSkill>, TechnicalSkillService>();
             services.AddTransient<IService<Education>, EducationService>();
-            services.AddTransient<IRepository, Repository>();
-            services.AddTransient<UserService>();
-            //services.AddTransient<IService<User>, UserService>();
             services.AddTransient<IService<Certification>, CertificationService>();
+            services.AddTransient<UserService>();
+            services.AddTransient<ConsultantService>();
+            services.AddTransient<UserRepository>();
+            services.AddTransient<ConsultantRepository>();
+            
 
             services.AddSwaggerGen(swag =>
             {

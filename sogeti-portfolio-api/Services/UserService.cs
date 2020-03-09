@@ -11,10 +11,10 @@ namespace sogeti_portfolio_api.Services
 {
     public class UserService
     {
-        private readonly IRepository _repository;
+        private readonly UserRepository _repository;
         private readonly IMapper _mapper;
 
-        public UserService(IRepository repository, IMapper mapper)
+        public UserService(UserRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -24,13 +24,22 @@ namespace sogeti_portfolio_api.Services
         {
             var reader = await _repository.GetUsers();
             var userList = new List<UserDTO>();
-            // TODO use dapper or automapper to map each row in the reader to a USer
             if(reader != null)
             {
-                userList.Add(_mapper.Map<UserDTO>(reader));
+                userList = _mapper.Map<IEnumerable<User>, List<UserDTO>>(reader);
             }
-
             return userList;
+        }
+
+        public async Task<UserDTO> GetUser(string id)
+        {
+            var reader = await _repository.GetUserById(id);
+            var user = new UserDTO();
+            if(reader != null)
+            {
+                user = _mapper.Map<User, UserDTO>(reader);
+            }
+            return user;
         }
     }
 }

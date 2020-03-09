@@ -7,8 +7,9 @@ namespace sogeti_portfolio_api.Data
 {
    public interface IRepository
    {
-      Task<IEnumerable<DbDataReader>> GetUsers();
-      Task<User> GetUserById(string id);
-
-   }
+        // Task<IEnumerable<T>> Get();
+        // Task<T> GetById(string id);
+        // Task<IEnumerable<Consultant>> GetConsultants();
+        // Task<Consultant> GetConsultantById(string id);
+    }
 }
