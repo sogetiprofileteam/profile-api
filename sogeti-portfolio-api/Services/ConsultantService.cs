@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
-using Newtonsoft.Json.Linq;
 using sogeti_portfolio_api.Data;
 using sogeti_portfolio_api.DTOs;
-using sogeti_portfolio_api.Interfaces;
 using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.Services

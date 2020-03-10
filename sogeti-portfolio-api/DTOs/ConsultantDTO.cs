@@ -1,4 +1,5 @@
 using System;
+using sogeti_portfolio_api.Models;
 
 namespace sogeti_portfolio_api.DTOs
 {
@@ -20,7 +21,7 @@ namespace sogeti_portfolio_api.DTOs
         public string urlPersonal { get ; set; }
 
         // public Address address { get; set; }
-        // public CoreSkill[] coreSkills { get; set; }
+        public CoreSkill[] coreSkills { get; set; }
         // public TechnicalSkill[] technicalSkills { get; set; }
         // public Education[] education { get; set; }
         // public Certification[] certifications { get; set; }

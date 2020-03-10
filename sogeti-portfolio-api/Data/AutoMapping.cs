@@ -25,6 +25,19 @@ namespace sogeti_portfolio_api.Data
             .ForMember(dest => dest.email, source => source.MapFrom(src => src.email))
             .ForMember(dest => dest.practice, source => source.MapFrom(src => src.practice))
             .ForMember(dest => dest.summary, source => source.MapFrom(src => src.summary));
+
+            CreateMap<CoreSkill, CoreSkillDTO>()
+            .ForMember(dest => dest.GuidString, source => source.MapFrom(src => src.GuidString))
+            .ForMember(dest => dest.name, source => source.MapFrom(src => src.name))
+            .ForMember(dest => dest.display, source => source.MapFrom(src => src.display))
+            .ForMember(dest => dest.displayOrder, source => source.MapFrom(src => src.displayOrder));
+
+            CreateMap<Education, EducationDTO>()
+            .ForMember(dest => dest.school, source => source.MapFrom(src => src.school))
+            .ForMember(dest => dest.subject, source => source.MapFrom(src => src.subject))
+            .ForMember(dest => dest.levelOfDegree, source => source.MapFrom(src => src.levelOfDegree))
+            .ForMember(dest => dest.startDate, source => source.MapFrom(src => src.startDate))
+            .ForMember(dest => dest.endDate, source => source.MapFrom(src => src.endDate));
         }
     }
 }

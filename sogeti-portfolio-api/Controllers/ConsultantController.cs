@@ -1,9 +1,5 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using sogeti_portfolio_api.Models;
-using sogeti_portfolio_api.Interfaces;
-using System;
 using sogeti_portfolio_api.Services;
 using AutoMapper;
 using System.Collections.Generic;

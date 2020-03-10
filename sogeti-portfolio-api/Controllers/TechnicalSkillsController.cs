@@ -1,23 +1,33 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using sogeti_portfolio_api.Data;
-using sogeti_portfolio_api.Models;
-using sogeti_portfolio_api.Interfaces;
+using sogeti_portfolio_api.Services;
+using AutoMapper;
+using System.Collections.Generic;
+using sogeti_portfolio_api.DTOs;
 
 namespace sogeti_portfolio_api.Controllers {
     [Route ("technicalskills")]
     [ApiController]
-    public class TechnicalSkillsController : AbstractController<TechnicalSkill> {
-        public TechnicalSkillsController (IService<TechnicalSkill> technicalSkillService)
-        : base(technicalSkillService)
+    public class TechnicalSkillsController : Controller 
+    {
+        private readonly TechnicalSkillService _service;
+        private readonly IMapper _mapper;
+        public TechnicalSkillsController (TechnicalSkillService service, IMapper mapper)
         {
-            // intentionally empty
+            _service = service;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<TechnicalSkillDTO>> GetTechnicalSkills()
+        {
+            return await _service.GetTechnicalSkills();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<TechnicalSkillDTO> GetTechnicalSkill(string id)
+        {
+            return await _service.GetTechnicalSkill(id);
         }
     }
 }
