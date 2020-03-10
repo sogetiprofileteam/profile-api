@@ -32,12 +32,25 @@ namespace sogeti_portfolio_api.Data
             .ForMember(dest => dest.display, source => source.MapFrom(src => src.display))
             .ForMember(dest => dest.displayOrder, source => source.MapFrom(src => src.displayOrder));
 
+            CreateMap<TechnicalSkill, TechnicalSkillDTO>()
+            .ForMember(dest => dest.GuidString, source => source.MapFrom(src => src.GuidString))
+            .ForMember(dest => dest.name, source => source.MapFrom(src => src.name))
+            .ForMember(dest => dest.display, source => source.MapFrom(src => src.display))
+            .ForMember(dest => dest.displayOrder, source => source.MapFrom(src => src.displayOrder));
+
             CreateMap<Education, EducationDTO>()
+            .ForMember(dest => dest.GuidString, source => source.MapFrom(src => src.GuidString))
             .ForMember(dest => dest.school, source => source.MapFrom(src => src.school))
             .ForMember(dest => dest.subject, source => source.MapFrom(src => src.subject))
             .ForMember(dest => dest.levelOfDegree, source => source.MapFrom(src => src.levelOfDegree))
             .ForMember(dest => dest.startDate, source => source.MapFrom(src => src.startDate))
             .ForMember(dest => dest.endDate, source => source.MapFrom(src => src.endDate));
+
+            CreateMap<Certification, CertificationDTO>()
+            .ForMember(dest => dest.GuidString, source => source.MapFrom(src => src.GuidString))
+            .ForMember(dest => dest.name, source => source.MapFrom(src => src.name))
+            .ForMember(dest => dest.title, source => source.MapFrom(src => src.title))
+            .ForMember(dest => dest.dateRecieved, source => source.MapFrom(src => src.dateRecieved));
         }
     }
 }
