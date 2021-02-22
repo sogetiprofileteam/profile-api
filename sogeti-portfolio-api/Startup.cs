@@ -32,7 +32,9 @@ namespace sogeti_portfolio_api
                             .AllowAnyMethod()
                             .AllowAnyHeader();
                     });
+               
             });
+             var EnvconnectionString = Environment.GetEnvironmentVariable("CONNECT_STR");
             services.AddMvc()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
@@ -64,6 +66,7 @@ namespace sogeti_portfolio_api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {
